@@ -1,0 +1,31 @@
+# Node.js
+node_modules/
+npm-debug.log*
+.env*
+.DS_Store # macOS specific
+.eslintcache
+.idea/ # IDE specific (e.g., WebStorm)
+.vscode/ # VS Code specific
+logs/
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Optional npm cache directory
+.npm/
+
+# Optional REPL history
+.node_repl_history
+
+# Local environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
