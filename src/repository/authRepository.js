@@ -1,4 +1,4 @@
-import { verify } from 'crypto'
+
 import client from '../config/database.js'
 
 export const authRepository = {
@@ -50,5 +50,6 @@ export const authRepository = {
       [password, mobile]
     )
     return rows[0]
-  }
+  },
+
 }

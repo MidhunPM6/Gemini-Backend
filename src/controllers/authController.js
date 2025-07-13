@@ -128,6 +128,8 @@ export const changePasswordController = async (req, res) => {
         .json({ success: false, message: error.message })
     }
   } else {
+
+
     const { mobile, otp, newPassword } = req.body
     if (!mobile || !otp || !newPassword) {
       return res
@@ -153,3 +155,5 @@ export const changePasswordController = async (req, res) => {
     }
   }
 }
+
+

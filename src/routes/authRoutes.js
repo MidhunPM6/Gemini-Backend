@@ -1,6 +1,5 @@
 import express from 'express'
 import { signupController, generateOtpController,verifyOtpController,forgotPasswordController,changePasswordController } from '../controllers/authController.js'
-import { verifyJwtToken } from '../middlewares/verifyJwtToken.js'
 import { verifyOptionalJwtToken } from '../middlewares/verifyOptionalJwtToken.js'
 
 
