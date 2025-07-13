@@ -8,7 +8,7 @@ export default class SignupUsecase {
 
     try {
       const isExistingUser = await authRepository.findUser({
-        email: userData.email
+        mobile: userData.mobile
       })
       if (isExistingUser) {
         throw new Error('User already exists')

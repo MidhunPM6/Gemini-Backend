@@ -2,6 +2,8 @@
 import StatusCodes from '../utils/statusCodes.js'
 import SignupUsecase from '../use-cases/auth/signupUsecase.js'
 import OtpUseCase from '../use-cases/auth/otpUseCase.js'
+import VerifyOtpUseCase from '../use-cases/auth/verifyOtpUsecase.js'
+
 
 
 
@@ -50,3 +52,25 @@ export const generateOtpController =async(req, res)=>{
             .json({ success: false, message: error.message })
         }
 }
+
+export const verifyOtpController =async(req, res)=>{
+  const { mobile, userOtp } = req.body 
+  if (!mobile || !userOtp) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ success: false, message: 'Mobile number and OTP are required' })
+  }
+  try {
+    const verifyOtpUseCase = new VerifyOtpUseCase()
+    const response = await  verifyOtpUseCase.execute(mobile, userOtp)
+    return res
+      .status(StatusCodes.CREATED)
+      .json({ success: true, data:response, message: 'Otp verified successfully' })
+  } catch (error) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: error.message })
+  }
+}
+
+
