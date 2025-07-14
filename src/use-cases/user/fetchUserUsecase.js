@@ -15,7 +15,6 @@ export default class FetchUserUsecase {
       return user
     } catch (err) {
       console.error(err)
-
       throw new Error(err.message)
     }
   }

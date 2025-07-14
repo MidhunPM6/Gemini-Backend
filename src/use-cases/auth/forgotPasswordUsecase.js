@@ -2,7 +2,7 @@ import { authRepository } from "../../repository/authRepository.js";
 import { generateOtp } from "../../utils/generateOtp.js";
 
 
-export default class ForgotPasswordUsecase{
+export default class ForgotPasswordUseCase{
     async execute(mobileNumber) {
         if (!mobileNumber) {
             throw new Error('Mobile number is required');

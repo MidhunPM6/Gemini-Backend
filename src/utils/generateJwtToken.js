@@ -5,7 +5,7 @@ export const generateToken = (payload) => {
     const token = jwt.sign(
       payload,
       process.env.JWT_SECRET_KEY,
-      { expiresIn: '1h' }
+      { expiresIn: '7d' }
     );
     return token;
   } catch (err) {
