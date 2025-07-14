@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser'
 import authRoutes from './routes/authRoutes.js'
 import { dbConnection } from './config/database.js'
 import userRoutes from './routes/userRoute.js'
+import paymentRoutes from './routes/paymentRoutes.js'
 
 export const app = express()
 
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 
 app.use( authRoutes)
 app.use( userRoutes)
+app.use( paymentRoutes)
 
 // app.use('/user')
 // app.use('/chatroom')
