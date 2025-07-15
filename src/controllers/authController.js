@@ -3,7 +3,7 @@ import SignupUsecase from '../use-cases/auth/signupUsecase.js'
 import OtpUseCase from '../use-cases/auth/otpUseCase.js'
 import VerifyOtpUseCase from '../use-cases/auth/verifyOtpUsecase.js'
 import ForgotPasswordUsecase from '../use-cases/auth/forgotPasswordUsecase.js'
-import ChangePasswordUseCase from '../use-cases/auth/changePasswordUsecase.js'
+import ChangePasswordUseCase from '../use-cases/auth/changePasswordUseCase.js'
 
 
 export const signupController = async (req, res) => {
