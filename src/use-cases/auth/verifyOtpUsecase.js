@@ -1,5 +1,5 @@
 import { authRepository } from '../../repository/authRepository.js'
-import { generateToken } from '../../utils/generateJWTToken.js'
+import { generateToken } from '../../utils/generateJwtToken.js'
 
 export default class VerifyOtpUseCase {
   async execute (mobile, otp) {
