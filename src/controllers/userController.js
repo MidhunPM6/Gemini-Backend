@@ -2,7 +2,7 @@ import StatusCodes from '../utils/statusCodes.js'
 import { redisClient } from '../config/redisClient.js'
 import FetchUserUsecase from '../use-cases/user/fetchUserUsecase.js'
 import CreateChatroomUseCase from '../use-cases/user/createChatroomUseCase.js'
-import FetchChatroomsUsecase from '../use-cases/user/fetchChatroomsUsecase.js'
+import FetchChatroomsUsecase from '../use-cases/user/fetchChatroomsUseCase.js'
 import GetChatRoomByIdUseCase from '../use-cases/user/getChatRoomByIdUseCase.js'
 import { queue } from '../config/queue.js'
 
