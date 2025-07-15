@@ -53,7 +53,7 @@ export const stripeWebhookController = async (req, res) => {
         await subscriptionUseCase.execute(paymentDetails)
       } catch (error) {
         console.error('Webhook handler failed:', error.message)
-        return res.status(400).send(`Webhook handler failed: ${error.message}`)
+        return res.status(StatusCodes.BAD_REQUEST).send(`Webhook handler failed: ${error.message}`)
       }
       break
 
@@ -64,7 +64,7 @@ export const stripeWebhookController = async (req, res) => {
   res.json({ received: true })
 }
 
-export const  subscriptionStatusController = async (req, res) => {
+export const subscriptionStatusController = async (req, res) => {
   const { email } = req.user
   try {
     const subscriptionUseCase = new SubscriptionStatusUseCase()

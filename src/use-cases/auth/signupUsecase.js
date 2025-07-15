@@ -1,6 +1,6 @@
 import { authRepository } from '../../repository/authRepository.js'
 import bcrypt, { hash } from 'bcrypt'
-export default class SignupUsecase {
+export default class SignupUseCase {
   async execute (userData) {
     if (!userData) {
       throw new Error('All fields are required')

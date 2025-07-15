@@ -1,5 +1,5 @@
 import StatusCodes from '../utils/statusCodes.js'
-import SignupUsecase from '../use-cases/auth/signupUseCase.js'
+import SignupUsecase from '../use-cases/auth/signupUsecase.js'
 import OtpUseCase from '../use-cases/auth/otpUseCase.js'
 import VerifyOtpUseCase from '../use-cases/auth/verifyOtpUseCase.js'
 import ForgotPasswordUsecase from '../use-cases/auth/forgotPasswordUseCase.js'
