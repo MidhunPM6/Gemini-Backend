@@ -7,7 +7,7 @@ import GetChatRoomByIdUseCase from '../use-cases/user/getChatRoomByIdUseCase.js'
 import { queue } from '../config/queue.js'
 
 
-
+  
 export const fetchUserController = async (req, res) => {
   const { id } = req.user
   try {
