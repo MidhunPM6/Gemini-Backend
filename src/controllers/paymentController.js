@@ -27,7 +27,6 @@ export const subscriptionController = async (req, res) => {
 
 export const stripeWebhookController = async (req, res) => {
   const sig = req.headers['stripe-signature']
-
   let event
 
   try {
@@ -41,27 +40,42 @@ export const stripeWebhookController = async (req, res) => {
     return res.status(400).send(`Webhook Error: ${err.message}`)
   }
 
-  switch (event.type) {
-    case 'checkout.session.completed':
-      const session = event.data.object
-      const paymentDetails = {
-        email: session.customer_details.email,
-        status: session.status
-      }
-      try {
+  try {
+    switch (event.type) {
+
+      case 'invoice.payment_succeeded': {
+        const invoice = event.data.object
+
+        const email = invoice.customer_email
+        const subscriptionId = invoice.subscription
+
+        console.log('Subscription payment successful for:', email)
+
         const subscriptionUseCase = new GetPaymentStatusUseCase()
-        await subscriptionUseCase.execute(paymentDetails)
-      } catch (error) {
-        console.error('Webhook handler failed:', error.message)
-        return res.status(StatusCodes.BAD_REQUEST).send(`Webhook handler failed: ${error.message}`)
+        await subscriptionUseCase.execute({
+          email,
+          subscriptionId,
+          status: 'active'
+        })
+
+        break
       }
-      break
+      case 'checkout.session.completed': {
+        console.log('Checkout session completed')
+        break
+      }
 
-    default:
-      console.info(`Unhandled event type ${event.type}`)
+      default:
+      
+        break
+    }
+
+    res.json({ received: true })
+
+  } catch (error) {
+    console.error('Webhook handler failed:', error.message)
+    res.status(400).send(`Webhook handler failed: ${error.message}`)
   }
-
-  res.json({ received: true })
 }
 
 export const subscriptionStatusController = async (req, res) => {
@@ -69,6 +83,8 @@ export const subscriptionStatusController = async (req, res) => {
   try {
     const subscriptionUseCase = new SubscriptionStatusUseCase()
     const response = await subscriptionUseCase.execute(email)
+    console.log(response);
+    
     return res.status(StatusCodes.OK).json({
       success: true,
       data: response,

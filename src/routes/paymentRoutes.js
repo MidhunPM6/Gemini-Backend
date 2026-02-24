@@ -8,4 +8,4 @@ router.post('/subscribe/pro',verifyJwtToken,subscriptionController)
 router.get('/subscribe/pro',verifyJwtToken,subscriptionStatusController)
 
 
-export default router
+export default router 

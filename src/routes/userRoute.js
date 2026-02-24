@@ -12,5 +12,5 @@ router.post('/chatroom',verifyJwtToken,createChatroomController)
 router.get('/chatroom',verifyJwtToken ,cacheMiddleware((req) => `user:${req.user.id}:chatrooms`),getChatroomController)
 router.get('/chatroom/:id',verifyJwtToken,getChatroomByIdController)
 router.post('/chatroom/:id/message',verifyJwtToken ,cacheMiddleware((req) => `prompt:${req.body.message}`),messageController)
-
+ 
 export default router
