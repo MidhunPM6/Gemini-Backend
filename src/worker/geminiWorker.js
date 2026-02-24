@@ -1,20 +1,21 @@
 import { Worker, Queue } from 'bullmq'
-import { redisClient } from '../config/redisClient.js'
+import { redisConfig } from '../config/redisClient.js'
 import { userRepository } from '../repository/userRepository.js'
 import { generate } from '../services/geminiService.js'
 import GeminiResponseUseCase from '../use-cases/user/geminResponseUseCase.js'
-import { dbConnection } from '../config/database.js'
-await dbConnection()
 
-const queue = new Queue('geminiQueue', { connection: redisClient })
+
+
+const queue = new Queue('geminiQueue', { connection: redisConfig })
 
 const worker = new Worker(
   'geminiQueue',
   async job => {
     try {
       const { message, id } = job.data
-
-      const response = await generate(message)
+      console.log("this is worker", message);
+      
+      const response = await generate(message) 
       const geminiText =
         response?.candidates?.[0]?.content?.parts?.[0]?.text || 'No text'
       const geminiResponseUseCase = new GeminiResponseUseCase(
@@ -22,7 +23,8 @@ const worker = new Worker(
         geminiText,
         message
       )
-
+     
+      console.log(geminiText);
       
       return { success: true }
     } catch (err) {
@@ -31,7 +33,7 @@ const worker = new Worker(
     }
   },
   {
-    connection: redisClient,
+    connection: redisConfig,
     defaultJobOptions: {
       attempts: 3,
       backoff: {
@@ -41,6 +43,8 @@ const worker = new Worker(
     }
   }
 )
+
+export default worker
 
 worker.on('ready', async () => {
   console.log('Worker is ready, checking for failed jobs...')
