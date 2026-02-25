@@ -10,7 +10,7 @@ export const authRepository = {
   },
   saveUser: async user => {
     const { rows } = await client.query(
-      `INSERT INTO auth.users (name, email, password, mobile) VALUES ('${user.name}', '${user.email}', '${user.password}', '${user.mobile}') RETURNING *`
+      `INSERT INTO auth.users ( mobile) VALUES ('${user.mobile}') RETURNING *`
     )
     return rows[0]
   },

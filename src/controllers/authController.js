@@ -7,16 +7,15 @@ import ChangePasswordUseCase from '../use-cases/auth/changePasswordUseCase.js'
 
 
 export const signupController = async (req, res) => {
-  const { name, email, password, mobile } = req.body
-  if (!name || !email || !password || !mobile) {
+  const {  mobile } = req.body
+  console.log(mobile);
+  
+  if (!mobile) {
     return res
       .status(StatusCodes.BAD_REQUEST)
-      .json({ success: false, message: 'All fields are required' })
+      .json({ success: false, message: 'Required mobile number' })
   }
   const data = {
-    name,
-    email,
-    password,
     mobile
   }
   try {
@@ -58,6 +57,8 @@ export const generateOtpController = async (req, res) => {
 
 export const verifyOtpController = async (req, res) => {
   const { mobile, userOtp } = req.body
+  console.log(mobile,userOtp);
+  
   if (!mobile || !userOtp) {
     return res
       .status(StatusCodes.BAD_REQUEST)
@@ -66,6 +67,15 @@ export const verifyOtpController = async (req, res) => {
   try {
     const verifyOtpUseCase = new VerifyOtpUseCase()
     const response = await verifyOtpUseCase.execute(mobile, userOtp)
+
+    res.cookie('token',response.data,{
+      httpOnly: true,
+      secure: false,
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 24 * 30,
+      path: '/',
+      
+    })
     return res.status(StatusCodes.CREATED).json({
       success: true,
       data: response,

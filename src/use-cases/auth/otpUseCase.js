@@ -8,7 +8,7 @@ export default class OtpUseCase {
       throw new Error(' Mobile number is required')
     }
     try {
-      const otp = generateOtp()
+      const otp = generateOtp(mobileNumber)
       if (!otp) {
         throw new Error('Otp not generated')
       }

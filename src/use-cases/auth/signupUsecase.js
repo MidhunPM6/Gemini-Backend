@@ -1,5 +1,5 @@
 import { authRepository } from '../../repository/authRepository.js'
-import bcrypt, { hash } from 'bcrypt'
+
 export default class SignupUseCase {
   async execute (userData) {
     if (!userData) {
@@ -7,14 +7,9 @@ export default class SignupUseCase {
     }
 
     try {
-      const isExistingUser = await authRepository.findUser({
+      const createUser = await authRepository.saveUser({
         mobile: userData.mobile
       })
-      if (isExistingUser) {
-        throw new Error('User already exists')
-      }
-      const hashPassword = await bcrypt.hash(userData.password, 10)
-      const createUser = await authRepository.saveUser({...userData,password: hashPassword})
 
       const response = {
         success: true,
