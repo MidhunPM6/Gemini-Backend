@@ -3,14 +3,13 @@ import { generateToken } from '../../utils/generateJwtToken.js'
 
 export default class VerifyOtpUseCase {
   async execute (mobile, otp) {
+    console.log('hhshshs:::::',mobile,otp)
     if (!mobile || !otp) {
       throw new Error('Mobile number and OTP are required')
     }
     try {
       const verifyOtp = await authRepository.verifyOtp(mobile, otp)
-      if (!verifyOtp) {
-        throw new Error('Invalid OTP')
-      }
+      
 
       const user = await authRepository.findUser({ mobile })
       if (!user) {

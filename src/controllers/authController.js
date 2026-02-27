@@ -71,7 +71,7 @@ export const verifyOtpController = async (req, res) => {
     res.cookie('token',response.data,{
       httpOnly: true,
       secure: false,
-      sameSite: 'strict',
+      sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 30,
       path: '/',
       
@@ -82,6 +82,8 @@ export const verifyOtpController = async (req, res) => {
       message: 'Otp verified successfully'
     })
   } catch (error) {
+    console.log(error);
+    
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ success: false, message: error.message })

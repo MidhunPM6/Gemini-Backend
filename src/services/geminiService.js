@@ -15,8 +15,8 @@ const geminiConfig = {
 }
 
 const geminiModel = googleAI.getGenerativeModel({
-  model: 'gemini-2.5-flash',
-  geminiConfig
+  model: 'gemini-2.0-flash-lite',
+  generationConfig: geminiConfig
 })
 
 export const generate = async (prompt) => {
@@ -24,9 +24,11 @@ export const generate = async (prompt) => {
     const result = await geminiModel.generateContent(prompt)
     const response = result.response
     console.log(response.text())
-    return response
+    return {response,result}
   } catch (error) {
     console.log('response error', error)
+    throw error
+    
   }
 }
 

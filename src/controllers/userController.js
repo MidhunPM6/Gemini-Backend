@@ -122,15 +122,33 @@ export const messageController = async (req, res) => {
         .status(StatusCodes.BAD_REQUEST)
         .json({ success: false, message: 'All fields are required' })
     }
-    
-    await queue.add('geminiJob', { message, id },{ attempts: 1 })
-    
+    const response = await queue.add('geminiJob', { message, id },{ attempts: 1 })
     return res
       .status(StatusCodes.CREATED)
-      .json({ message: 'Job submitted. Checking for status.' })
+      .json({ message: 'Job submitted. Checking for status.', jobId : response.id})
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)     
       .json({ success: false, message: error.message })    
   }
 }
+
+export const messageJobController = async (req, res) => {
+  try {
+    const job = await queue.getJob(req.params.id);
+    if (!job) return res.status(404).json({ error: "Job not found" });
+
+    const state = await job.getState();
+
+    res.status(200).json({
+      jobId: job.id,
+      state,
+      progress: job.progress,      
+      result: job.returnvalue,
+      reason: job.failedReason,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+

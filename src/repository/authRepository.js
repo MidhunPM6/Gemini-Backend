@@ -1,4 +1,3 @@
-
 import client from '../config/database.js'
 
 export const authRepository = {
@@ -24,9 +23,14 @@ export const authRepository = {
 
   verifyOtp: async (mobile, otp) => {
     const { rows } = await client.query(
-      `SELECT * FROM auth.otp WHERE $1 = mobile AND $2 = otp AND now() < expires_at`,
+      `SELECT * 
+       FROM auth.otp 
+       WHERE mobile = $1 
+         AND otp = $2 
+         AND now() < expires_at`,
       [mobile, otp]
     )
+
     return rows[0]
   },
 
@@ -50,6 +54,5 @@ export const authRepository = {
       [password, mobile]
     )
     return rows[0]
-  },
-
+  }
 }
